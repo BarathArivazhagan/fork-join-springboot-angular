@@ -1,0 +1,19 @@
+<div id="bank-container" class="container">
+  <h2>Bank Table</h2>
+           
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Bank ID</th>
+        <th>Bank Name</th>      
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bank of banks">
+        <td>{{bank.bankId}}</td>
+        <td>{{bank.bankName}}</td>       
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
