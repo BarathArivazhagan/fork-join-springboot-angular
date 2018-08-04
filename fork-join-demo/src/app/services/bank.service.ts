@@ -7,13 +7,13 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class BankService {
 
-  private  GET_BANKS_ENDPOINT = '/banks';
+  private  GET_BANKS_ENDPOINT = '/bankms/banks';
 
   constructor(private _http: HttpClient) { }
 
   getBanks(): Observable<Bank[]> {
 
-    const url = environment.bankServiceURL.concat(this.GET_BANKS_ENDPOINT);
+    const url = environment.gatewayurl.concat(this.GET_BANKS_ENDPOINT);
     console.log(' get banks url ',url);
     return this._http.get<Bank[]>(url);
   }

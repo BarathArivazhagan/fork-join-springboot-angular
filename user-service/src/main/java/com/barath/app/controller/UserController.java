@@ -36,6 +36,12 @@ public class UserController {
         return this.userService.getUser(userId);
     }
 
+    @GetMapping(value="/byName/{userName}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public User getUser(@PathVariable String userName){
+
+        return this.userService.getUserByUserName(userName);
+    }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<User> getUsers(){
 

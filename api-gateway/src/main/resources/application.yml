@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: api-gateway
+server:
+  port: 9500
+zuul:
+  routes:
+    bank-service:
+      path: /bankms/**
+      url: http://localhost:9001
+      strip-prefix: true
+    user-service:
+      path: /userms/**
+      url: http://localhost:9000
+      strip-prefix: true
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          netflix:
+            zuul:
+              web: debug
+
+
+

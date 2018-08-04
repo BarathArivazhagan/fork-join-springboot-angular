@@ -5,6 +5,5 @@
 
 export const environment = {
   production: false,
-  userServiceURL: 'http://localhost:9000',
-  bankServiceURL: 'http://localhost:9001'
+  gatewayurl: 'http://localhost:9500'  
 };
