@@ -10,23 +10,23 @@ import { forkJoin } from "rxjs/observable/forkJoin";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
-  
+export class AppComponent implements OnInit {
+
   @ViewChild(BankComponent) bank: BankComponent;
   @ViewChild(UserComponent) user: UserComponent;
 
-  constructor(private bankService: BankService, private userService: UserService ){
+  constructor(private bankService: BankService, private userService: UserService) {
 
   }
 
   ngOnInit() {
-    forkJoin([this.bankService.getBanks(),this.userService.getUsers()])
-      .subscribe( results => {
-          console.log('fork join results ',results);
-          console.log('bank results ',results[0]);
-          this.bank.banks= results[0];
-          console.log('user results ',results[1]);
-          this.user.users = results[1];
+    forkJoin([this.bankService.getBanks(), this.userService.getUsers()])
+      .subscribe(results => {
+        console.log('fork join results ', results);
+        console.log('bank results ', results[0]);
+        this.bank.banks = results[0];
+        console.log('user results ', results[1]);
+        this.user.users = results[1];
       });
   }
 }

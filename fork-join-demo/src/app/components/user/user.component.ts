@@ -16,7 +16,7 @@ export class UserComponent implements OnInit {
 
 }
 
-export interface User{
-  userId:number;
-  userName:string;
+export interface User {
+  userId: number;
+  userName: string;
 }

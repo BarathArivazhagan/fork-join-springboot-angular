@@ -14,12 +14,9 @@ export class BankComponent implements OnInit {
   ngOnInit() {
 
   }
-
-  
-
 }
 
-export interface Bank{
-  bankId:number;
-  bankName:string;
+export interface Bank {
+  bankId: number;
+  bankName: string;
 }
