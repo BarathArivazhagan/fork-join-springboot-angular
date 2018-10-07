@@ -8,9 +8,6 @@ image_resource:
 
 inputs:
   - name: master
-outputs:
-  - name: master
-
 run:
   path: sh
   args:
