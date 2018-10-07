@@ -1,0 +1,26 @@
+version: '3'
+services:
+  user-service:
+    build: ./user-service
+    ports:
+      - "9000:9000"
+  bank-service:
+    build: ./bank-service
+    ports:
+      - "9001:9001" 
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "9500:9500"
+    depends_on: 
+      - user-service
+      - bank-service
+    environment:     
+      ZUUL_ROUTES_USER_SERVICE_URL: http://user-service:9000
+      ZUUL_ROUTES_BANK_SERVICE_URL: http://bank-service:9001
+  fork-join-demo:
+    build: ./fork-join-demo
+    ports:
+      - "4200:80"
+      
+     
