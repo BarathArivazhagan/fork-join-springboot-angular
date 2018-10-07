@@ -5,4 +5,4 @@ applications:
   routes:
   - route: bank-service-barath.cfapps.io
   buildpack: java_buildpack
-  path: target/bank-service-*.jar
+  path: ../../target/bank-service-*.jar

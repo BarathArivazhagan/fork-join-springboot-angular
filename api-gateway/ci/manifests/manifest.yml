@@ -5,4 +5,4 @@ applications:
   routes:
   - route: api-gateway-barath.cfapps.io
   buildpack: java_buildpack
-  path: target/api-gateway-*.jar
+  path: ../../target/api-gateway-*.jar
