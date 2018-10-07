@@ -3,6 +3,6 @@ applications:
 - name: bank-service
   memory: 512M
   routes:
-  - bank-service-barath.cfapps.io
+  - route: bank-service-barath.cfapps.io
   buildpack: java_buildpack
   path: target/bank-service-*.jar
