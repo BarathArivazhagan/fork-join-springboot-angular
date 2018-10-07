@@ -5,11 +5,10 @@ jobs:
   plan:
   - get: master
   - task: maven-build
-    file: master/tasks/npm_build.yml
+    file: master/bank-service/ci/tasks/npm_build.yml
   - put: pcf
     params:
-        manifest: master/ci/manifests/manifest.yml
-        path: artifacts/dist
+        manifest: master/bank-service/ci/manifests/manifest.yml
 resources:
 - name: master
   type: git

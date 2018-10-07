@@ -4,12 +4,11 @@ jobs:
   serial: true
   plan:
   - get: master
-  - task: npm-build
-    file: master/tasks/mvn_build.yml
+  - task: maven-build
+    file: master/api-gateway/ci/tasks/mvn_build.yml
   - put: pcf
     params:
-        manifest: master/ci/manifests/manifest.yml
-        path: master
+        manifest: master/api-gateway/ci/manifests/manifest.yml       
 resources:
 - name: master
   type: git

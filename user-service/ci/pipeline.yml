@@ -5,7 +5,7 @@ jobs:
   plan:
   - get: master
   - task: maven-build
-    file: master/user-service/tasks/maven_build.yml
+    file: master/user-service/ci/tasks/maven_build.yml
   - put: pcf
     params:
         manifest: master/user-service/ci/manifests/manifest.yml       

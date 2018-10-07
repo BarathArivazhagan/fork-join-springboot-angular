@@ -5,7 +5,7 @@ jobs:
   plan:
   - get: master
   - task: npm-build
-    file: master/tasks/npm_build.yml
+    file: master/fork-join-demo/ci/tasks/npm_build.yml
   - put: pcf
     params:
         manifest: master/fork-join-demo/ci/manifests/manifest.yml
