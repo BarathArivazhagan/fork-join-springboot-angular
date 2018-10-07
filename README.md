@@ -11,28 +11,23 @@ In parallel computing, fork–join is a way of setting up and executing parallel
     <th style="text-align:left">Description</th>
   </tr>
   <tr>
-    <td><a href="https://github.com/BarathArivazhagan/spring-cloud-sidecar-sample/tree/master/eureka-server"> bank-service</a></td>
-    <td>9000</td>
-    <td>Spring Boot Microservice</td>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/BarathArivazhagan/spring-cloud-sidecar-sample/tree/master/csstore-microservice">user-service</a></td>
+    <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular5/tree/master/bank-service"> bank-service</a></td>
     <td>9001</td>
     <td>Spring Boot Microservice</td>
   </tr>
   <tr>
-    <td><a href="https://github.com/BarathArivazhagan/spring-cloud-sidecar-sample/tree/master/msstore-microservice">msstore-microservice</a></td>
+    <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular5/tree/master/user-service">user-service</a></td>
     <td>9002</td>
+    <td>Spring Boot Microservice</td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular5/tree/master/fork-join-demo">fork-join-demo</a></td>
+    <td>4200</td>
     <td>Fork Join Demo</td>
   </tr>
   <tr>
-    <td><a href="https://github.com/BarathArivazhagan/spring-cloud-sidecar-sample/tree/master/sidecar">sidecar</a></td>
-    <td>9004</td>
-    <td>Side car proxy for routing and filtering to wstore node app</td>
-  </tr>
-   <tr>
-    <td><a href="https://github.com/BarathArivazhagan/spring-cloud-sidecar-sample/tree/master/wstore-node-express">api-gateway</a></td>
-    <td>3000</td>
+    <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular5/tree/master/api-gateway">api-gateway</a></td>
+    <td>9500</td>
     <td>Zuul API Gateway</td>
   </tr>
   
