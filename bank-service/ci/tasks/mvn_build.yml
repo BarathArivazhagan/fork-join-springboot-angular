@@ -15,3 +15,5 @@ run:
             - |
                 cd master/bank-service
                 mvn clean install -DskipTests
+caches:
+  - path: /root/.m2
