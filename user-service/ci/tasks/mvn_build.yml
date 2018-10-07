@@ -13,5 +13,5 @@ run:
   args:
             - -exec
             - |
-                cd master
+                cd master/user-service
                 mvn clean install -DskipTests

@@ -12,7 +12,7 @@ run:
   args:
             - -exec
             - |
-                cd master
+                cd master/fork-join-demo
                 npm install
                 npm run build
                 ls
