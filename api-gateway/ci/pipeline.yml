@@ -1,0 +1,28 @@
+---
+jobs:
+- name: api-gateway
+  serial: true
+  plan:
+  - get: master
+  - task: npm-build
+    file: master/tasks/mvn_build.yml
+  - put: pcf
+    params:
+        manifest: master/ci/manifests/manifest.yml
+        path: master
+resources:
+- name: master
+  type: git
+  source:
+    uri:  ((github-url))
+    branch:  master
+    username: ((github-username))
+    password: ((github-password))
+- name: pcf
+  type: cf
+  source:
+    api:  ((cf-api))
+    username: ((cf-username))
+    password: ((cf-password))
+    organization: ((cf-org))
+    space: ((cf-space))

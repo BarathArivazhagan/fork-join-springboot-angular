@@ -1,0 +1,8 @@
+---
+applications:
+- name: api-gateway
+  memory: 512M
+  routes:
+  - api-gateway-barath.cfapps.io
+  buildpack: java_buildpack
+  path: target/api-gateway-*.jar

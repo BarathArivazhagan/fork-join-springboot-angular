@@ -1,0 +1,8 @@
+---
+applications:
+- name: fork-join-demo
+  memory: 512M
+  routes:
+  - fork-join-demo-barath.cfapps.io
+  buildpack: static_buildpack
+  

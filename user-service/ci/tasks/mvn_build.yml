@@ -1,0 +1,20 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: maven
+    tag: latest
+
+inputs:
+  - name: master
+outputs:
+  - name: master
+
+run:
+  path: sh
+  args:
+            - -exec
+            - |
+                cd master
+                mvn clean install -DskipTests

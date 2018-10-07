@@ -1,0 +1,8 @@
+---
+applications:
+- name: user-service
+  memory: 512M
+  routes:
+  - user-service-barath.cfapps.io
+  buildpack: java_buildpack
+  path: target/user-service-*.jar
