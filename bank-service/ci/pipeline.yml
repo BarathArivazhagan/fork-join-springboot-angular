@@ -5,7 +5,7 @@ jobs:
   plan:
   - get: master
   - task: maven-build
-    file: master/bank-service/ci/tasks/npm_build.yml
+    file: master/bank-service/ci/tasks/mvn_build.yml
   - put: pcf
     params:
         manifest: master/bank-service/ci/manifests/manifest.yml
