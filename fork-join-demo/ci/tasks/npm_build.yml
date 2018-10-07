@@ -16,5 +16,5 @@ run:
                 npm install
                 npm run build
                 ls
-                cp -R dist ../artifacts/  
+                cp -R dist ../../artifacts/  
                 pwd
