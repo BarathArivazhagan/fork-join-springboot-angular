@@ -9,7 +9,7 @@ jobs:
   - put: pcf
     params:
         manifest: master/fork-join-demo/ci/manifests/manifest.yml
-        path: artifacts/dist
+        path: ../artifacts/dist
 resources:
 - name: master
   type: git
