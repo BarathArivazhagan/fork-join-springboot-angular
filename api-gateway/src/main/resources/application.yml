@@ -13,6 +13,8 @@ zuul:
       path: /userms/**
       url: http://localhost:9000
       strip-prefix: true
+  retryable: true
+
 logging:
   level:
     org:
