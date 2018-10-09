@@ -2,6 +2,9 @@
 
 In parallel computing, fork–join is a way of setting up and executing parallel programs, such that execution branches off in parallel at designated points in the program, to "join" (merge) at a subsequent point and resume sequential execution. Parallel sections may fork recursively until a certain task granularity is reached. Fork–join can be considered a parallel design pattern.
 
+# fork-join Flow
+
+
 ![fork join](images/forkjoin.png)
 
 <table>
@@ -32,3 +35,73 @@ In parallel computing, fork–join is a way of setting up and executing parallel
   </tr>
   
 </table>
+
+## How to run the application ?
+
+* Clone the repository
+
+```
+git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular5.git
+```
+
+* Execute below script to build all the applications
+
+```
+cd fork-join-springboot-angular5
+./build.sh
+
+```
+* On windows, navigate to each applications and perform maven/webpack build
+
+```
+cd fork-join-springboot-angular5
+cd api-gateway 
+./mvnw clean package
+
+cd bank-service
+./mvnw clean package
+
+cd user-service
+./mvnw clean package
+
+cd fork-join-demo
+
+npm install
+npm run build
+
+```
+
+* Start the applications
+
+```
+cd fork-join-springboot-angular5
+cd api-gateway 
+./mvnw spring-boot:run
+
+cd bank-service
+./mvnw spring-boot:run
+
+cd user-service
+./mvnw spring-boot:run
+
+cd fork-join-demo
+
+npm run start
+
+```
+
+### Docker support
+
+Take advantage of docker compose to quickly build and run applications as containers.
+
+* Build docker images
+
+```
+docker-compose build
+```
+
+* Run the applications
+
+```
+docker-compose up
+```
