@@ -1,14 +1,22 @@
-import { AppPage } from './app.po';
+import { MainPage } from './main-page';
+import { browser } from 'protractor';
 
 describe('fork-join-demo App', () => {
-  let page: AppPage;
+  let page: MainPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new MainPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display bank component', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    browser.wait(page.getBankComponent().isDisplayed())
+    expect(page.getBankComponent().isPresent()).toBeTruthy();
+  });
+
+  it('should display user component', () => {
+    page.navigateTo();
+    browser.wait(page.getUserComponent().isDisplayed())
+    expect(page.getUserComponent().isPresent()).toBeTruthy();
   });
 });
