@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: bank-app-service
+spec:
+  selector:
+    app: bank-service
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 9001
+    targetPort: 9001
