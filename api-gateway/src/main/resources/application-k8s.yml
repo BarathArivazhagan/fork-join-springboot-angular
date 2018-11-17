@@ -7,11 +7,11 @@ zuul:
   routes:
     bank-service:
       path: /bankms/**
-      url: http://localhost:9001
+      url: ${bank.service.url}
       strip-prefix: true
     user-service:
       path: /userms/**
-      url: http://localhost:9000
+      url: ${user.service.url}
       strip-prefix: true
   retryable: true
 
@@ -25,10 +25,4 @@ logging:
               web: debug
 
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: 
-          - "*"
 

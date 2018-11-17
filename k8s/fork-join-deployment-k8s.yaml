@@ -1,19 +1,189 @@
+
+# config map to pass environment variables to containers
+apiVersion: v1
+data:
+  spring.profiles.active: k8s
+kind: ConfigMap
+metadata:
+  name: spring-config-map
+
+---
+# config map to pass environment variables to containers
+apiVersion: v1
+data:
+  user.service.url: http://user-service
+  bank.service.url: http://bank-service
+kind: ConfigMap
+metadata:
+  name: api-gateway-config-map
+---
+
+# deployment config for user service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fork-join-deployment
+  name: user-app
+spec:
+  selector:
+    matchLabels:
+      app: user-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: user-service
+        image: barathece91/user-service
+        ports:
+        - containerPort: 9001
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom:
+              configMapKeyRef:
+                  name: spring-config-map
+                  key: spring.profiles.active
+   
+---
+# deployment config for bank service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bank-app
 spec:
   selector:
     matchLabels:
       app: bank-service
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
         app: bank-service
     spec:
-      containers:
+      containers:   
       - name: bank-service
-        image: bank-service
+        image: barathece91/bank-service
         ports:
-        - containerPort: 9001
+        - containerPort: 9000
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom:
+              configMapKeyRef:
+                  name: spring-config-map
+                  key: spring.profiles.active   
+---
+
+
+# deployment config for api gateway
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fork-join-api-gateway
+spec:
+  selector:
+    matchLabels:
+      app: api-gateway
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+      - name: api-gateway
+        image: barathece91/fork-join-api-gateway
+        ports:
+        - containerPort: 9500
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom:
+              configMapKeyRef:
+                  name: spring-config-map
+                  key: spring.profiles.active
+              configMapKeyRef:
+                  name: api-gateway-config-map
+                  key: user.service.url
+              configMapKeyRef:
+                  name: api-gateway-config-map
+                  key: bank.service.url
+---
+
+
+# deployment config for fork-join-demo ui
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fork-join-demo-app
+spec:
+  selector:
+    matchLabels:
+      app: fork-join-demo-ui
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: fork-join-demo-ui
+    spec:
+      containers:
+      - name: fork-join-demo-ui
+        image: barathece91/fork-join-demo-ui
+        ports:
+        - containerPort: 4200
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: fork-join-api-gateway
+spec:
+  selector:
+    app: api-gateway
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 9500
+    targetPort: 9500
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: bank-service
+spec:
+  selector:
+    app: bank-service
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 9001
+    targetPort: 9001
+    nodePort: 30782
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: user-service
+spec:
+  selector:
+    app: user-service
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 9000
+    targetPort: 9000
+    nodePort: 32439
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: fork-join-ui
+spec:
+  selector:
+    app: fork-join-demo-ui
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 4200
+    targetPort: 80

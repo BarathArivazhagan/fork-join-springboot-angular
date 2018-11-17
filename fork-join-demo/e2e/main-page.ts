@@ -12,4 +12,8 @@ export class MainPage {
   getUserComponent() {
     return element(by.id('user-container'));
   }
+
+  getUserTableBody() {
+    return element(by.xpath('//*[@id="user-container"]/table/tbody'));
+  }
 }
