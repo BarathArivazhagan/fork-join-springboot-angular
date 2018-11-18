@@ -1,0 +1,36 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fork-join-api-gateway
+spec:
+  selector:
+    matchLabels:
+      app: api-gateway
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+      - name: api-gateway
+        image: barathece91/fork-join-api-gateway
+        ports:
+        - containerPort: 9500
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom:
+              configMapKeyRef:
+                  name: spring-config-map
+                  key: spring.profiles.active
+        - name: user.service.url
+          valueFrom:
+              configMapKeyRef:
+                  name: api-gateway-config-map
+                  key: user.service.url
+        - name: bank.service.url
+          valueFrom:
+              configMapKeyRef:
+                  name: api-gateway-config-map
+                  key: bank.service.url

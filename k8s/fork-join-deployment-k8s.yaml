@@ -102,9 +102,13 @@ spec:
               configMapKeyRef:
                   name: spring-config-map
                   key: spring.profiles.active
+        - name: user.service.url
+          valueFrom:
               configMapKeyRef:
                   name: api-gateway-config-map
                   key: user.service.url
+        - name: bank.service.url
+          valueFrom:
               configMapKeyRef:
                   name: api-gateway-config-map
                   key: bank.service.url
