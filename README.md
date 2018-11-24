@@ -2,7 +2,7 @@
 
 In parallel computing, fork–join is a way of setting up and executing parallel programs, such that execution branches off in parallel at designated points in the program, to "join" (merge) at a subsequent point and resume sequential execution. Parallel sections may fork recursively until a certain task granularity is reached. Fork–join can be considered a parallel design pattern.
 
-# fork-join Flow
+# fork-join flow
 
 
 ![fork join](images/forkjoin.png)
@@ -20,7 +20,7 @@ In parallel computing, fork–join is a way of setting up and executing parallel
   </tr>
   <tr>
     <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular5/tree/master/user-service">user-service</a></td>
-    <td>9002</td>
+    <td>9000</td>
     <td>Spring Boot Microservice</td>
   </tr>
   <tr>
@@ -104,4 +104,23 @@ docker-compose build
 
 ```
 docker-compose up
+```
+
+### Kubernetes Support
+
+To deploy the applications as docker containers inside kubernetes cluster
+
+```
+$ git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular5.git && cd fork-join-springboot-angular5
+$ kubectl create -f k8s/fork-join-deployment-k8s.yaml
+
+configmap/spring-config-map created
+configmap/api-gateway-config-map created
+deployment.apps/user-app created
+deployment.apps/bank-app created
+deployment.apps/fork-join-api-gateway created
+deployment.apps/fork-join-demo-app created
+service/fork-join-api-gateway created
+service/bank-service created
+service/user-service createdservice/fork-join-ui created
 ```
