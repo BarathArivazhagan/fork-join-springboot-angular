@@ -11,8 +11,8 @@ metadata:
 # config map to pass environment variables to containers
 apiVersion: v1
 data:
-  user.service.url: http://user-service
-  bank.service.url: http://bank-service
+  user.service.url: http://${USER_SERVICE_SERVICE_HOST}:${USER_SERVICE_SERVICE_PORT}
+  bank.service.url: http://${BANK_SERVICE_SERVICE_HOST}:${BANK_SERVICE_SERVICE_PORT}
 kind: ConfigMap
 metadata:
   name: api-gateway-config-map
