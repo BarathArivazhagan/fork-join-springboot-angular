@@ -26,7 +26,7 @@ In parallel computing, fork–join is a way of setting up and executing parallel
   <tr>
     <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular5/tree/master/fork-join-demo">fork-join-demo</a></td>
     <td>4200</td>
-    <td>Fork Join Demo</td>
+    <td>Angular App</td>
   </tr>
   <tr>
     <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular5/tree/master/api-gateway">api-gateway</a></td>
