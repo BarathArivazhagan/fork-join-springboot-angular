@@ -3,6 +3,8 @@ package com.barath.app.service;
 import com.barath.app.entity.User;
 import com.barath.app.exception.UserNotFoundException;
 import com.barath.app.repository.UserRepository;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -24,26 +27,35 @@ public class UserService {
     }
 
     public User saveUser(User user){
-
+    	
+    	if(logger.isInfoEnabled()) { logger.info(" saving user with user details {}",Objects.toString(user)); } 
         return this.userRepository.save(user);
+    }
+    
+    public List<User> saveUsers(List<User> users){
+    	
+    	if(logger.isInfoEnabled()) { logger.info(" saving users with users details {}",Objects.toString(users)); } 
+    	return this.userRepository.saveAll(users);
     }
 
     public User getUser(Long userId){
-
+    	
+    	if(logger.isInfoEnabled()) { logger.info(" getting user with userid {}",userId); } 
         Optional<User> bankOptional= this.userRepository.findById(userId);
-        if(bankOptional.isPresent()){
-            return bankOptional.get();
-        }
-        throw new UserNotFoundException("User with user id "+userId+" not found");
+        bankOptional.orElseThrow( () -> new UserNotFoundException("User with user id "+userId+" not found"));
+        return bankOptional.get();
     }
 
     public User getUserByUserName(String userName){
+    	
+    	if(logger.isInfoEnabled()) { logger.info(" getting user with username {}",userName); } 
         return this.userRepository.findByUserName(userName);
     }
 
     public List<User> getUsers(){
-
-        List<User> users = this.userRepository.findAll();
+    	
+    	if(logger.isInfoEnabled()) { logger.info(" getting all the users"); } 
+    	List<User> users = this.userRepository.findAll();
         if(logger.isInfoEnabled()){
             users.forEach(user -> logger.info(user.toString()));
         }

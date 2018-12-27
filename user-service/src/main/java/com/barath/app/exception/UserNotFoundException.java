@@ -1,8 +1,15 @@
 package com.barath.app.exception;
 
+/**
+ * 
+ * @author barath
+ *
+ */
 public class UserNotFoundException extends RuntimeException {
 
-    public UserNotFoundException() {
+	private static final long serialVersionUID = 7109052613494384578L;
+
+	public UserNotFoundException() {
         super();
     }
 

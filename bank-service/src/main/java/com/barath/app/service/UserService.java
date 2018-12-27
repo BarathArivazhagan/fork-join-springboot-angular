@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -27,8 +28,8 @@ public class UserService {
         length = 5L;
         List<CompletableFuture<User>> futuresList = this.futureUserTaskService.getFutures(length);
         futuresList.forEach(future -> logger.info("future {}",future));
-         List<User> users=futuresList.parallelStream().map(CompletableFuture::join).collect(Collectors.toList());
-        users.forEach(System.out::println);
-         return users;
+        List<User> users=futuresList.parallelStream().map(CompletableFuture::join).collect(Collectors.toList());
+        users.forEach(user -> logger.info("user details {} ", Objects.toString(user)));
+        return users;
     }
 }
