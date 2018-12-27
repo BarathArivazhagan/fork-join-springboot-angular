@@ -6,13 +6,13 @@ metadata:
     app: {{ include "fork-join-chart.name" . }}    
     release: {{ .Release.Name }}
     env: {{ .Values.environment }}
+    chart-name: {{ include "fork-join-chart.chart" . }}
 spec:
-  replicas: {{ .Values.apigateway.image.replicas }}
+  replicas: {{ .Values.apigateway.replicas }}
   selector:
     matchLabels:
       app: {{ include "fork-join-chart.name" . }}
-      release: {{ .Release.Name }}
-      chart-name: {{ include "fork-join-chart.chart" . }}
+      release: {{ .Release.Name }}     
   template:
     metadata:
       labels:

@@ -8,7 +8,7 @@ metadata:
     env: {{ .Values.environment }}
     chart-name: {{ include "fork-join-chart.chart" . }}
 spec:
-  replicas: {{ .Values.userservice.image.replicas }}
+  replicas: {{ .Values.userservice.replicas }}
   selector:
     matchLabels:
       app: {{ include "fork-join-chart.name" . }}
