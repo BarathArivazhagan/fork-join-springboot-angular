@@ -21,82 +21,109 @@ metadata:
 # deployment config for user service
 apiVersion: v1
 kind: DeploymentConfig
-metadata:
+metadata:  
+  labels:
+    app: user-service
   name: user-service
 spec:
+  replicas: 1
   selector:
-    matchLabels:
-      app: user-service
-  replicas: 2
+    app: user-service
+    deploymentconfig: user-service
+  strategy:    
+    type: Rolling
   template:
-    metadata:
+    metadata:      
       labels:
         app: user-service
+        deploymentconfig: user-service
     spec:
       containers:
-      - name: user-service
-        image: barathece91/user-service
-        ports:
-        - containerPort: 9001
-        env:
-        - name: SPRING_PROFILES_ACTIVE
-          valueFrom:
+        - image: barathece91/user-service
+          imagePullPolicy: Always
+          name: user-service
+          ports:
+          - containerPort: 9000
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
               configMapKeyRef:
-                  name: spring-config-map
-                  key: spring.profiles.active
+                name: spring-config-map
+                key: spring.profiles.active
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
   triggers:
-    - type: "ConfigChange" 
-    - type: "ImageChange" 
-      imageChangeParams:
+    - type: ConfigChange
+    - imageChangeParams:
         automatic: true
         containerNames:
-          - "user-service"
+        - user-service
         from:
-          kind: "ImageStreamTag"
-          name: "barathece91/user-service:latest" 
-  strategy: 
-    type: "Rolling"
+          kind: ImageStreamTag
+          name: 'user-service:latest' 
+      type: ImageChange
 
 ---
 
 # deployment config for bank service
 apiVersion: v1
 kind: DeploymentConfig
-metadata:
-  name: bank-app
+metadata:  
+  labels:
+    app: bank-service
+  name: bank-service  
 spec:
-  selector:
-    matchLabels:
-      app: bank-service
   replicas: 1
+  selector:
+    app: bank-service
+    deploymentconfig: bank-service
+  strategy:    
+    type: Rolling
   template:
-    metadata:
+    metadata:      
       labels:
         app: bank-service
+        deploymentconfig: bank-service
     spec:
-      containers:   
-      - name: bank-service
-        image: barathece91/bank-service
-        ports:
-        - containerPort: 9000
-        env:
-        - name: SPRING_PROFILES_ACTIVE
-          valueFrom:
+      containers:
+        - image: barathece91/bank-service
+          imagePullPolicy: Always
+          name: bank-service
+          ports:
+          - containerPort: 9001
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
               configMapKeyRef:
-                  name: spring-config-map
-                  key: spring.profiles.active
+                name: spring-config-map
+                key: spring.profiles.active
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
   triggers:
-    - type: "ConfigChange" 
-    - type: "ImageChange" 
-      imageChangeParams:
+    - type: ConfigChange
+    - imageChangeParams:
         automatic: true
         containerNames:
-          - "bank-service"
+        - bank-service
         from:
-          kind: "ImageStreamTag"
-          name: "barathece91/bank-service:latest" 
-  strategy: 
-    type: "Rolling"
+          kind: ImageStreamTag
+          name: 'bank-service:latest' 
+      type: ImageChange
+
 ---
 
 
@@ -104,51 +131,64 @@ spec:
 
 apiVersion: v1
 kind: DeploymentConfig
-metadata:
-  name: fork-join-api-gateway
+metadata:  
+  labels:
+    app: api-gateway
+  name: api-gateway 
 spec:
-  selector:
-    matchLabels:
-      app: api-gateway
   replicas: 1
+  selector:
+    app: api-gateway
+    deploymentconfig: api-gateway
+  strategy:    
+    type: Rolling
   template:
-    metadata:
+    metadata:      
       labels:
         app: api-gateway
+        deploymentconfig: api-gateway
     spec:
       containers:
-      - name: api-gateway
-        image: barathece91/fork-join-api-gateway
-        ports:
-        - containerPort: 9500
-        env:
-        - name: SPRING_PROFILES_ACTIVE
-          valueFrom:
+        - image: barathece91/fork-join-api-gateway
+          imagePullPolicy: Always
+          name: api-gateway
+          ports:
+          - containerPort: 9500
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
               configMapKeyRef:
-                  name: spring-config-map
-                  key: spring.profiles.active
-        - name: user.service.url
-          valueFrom:
+                name: spring-config-map
+                key: spring.profiles.active
+          - name: USER_SERVICE_URL
+            valueFrom:
               configMapKeyRef:
-                  name: api-gateway-config-map
-                  key: user.service.url
-        - name: bank.service.url
-          valueFrom:
+                name: api-gateway-config-map
+                key: user.service.url
+          - name: BANK_SERVICE_URL
+            valueFrom:
               configMapKeyRef:
-                  name: api-gateway-config-map
-                  key: bank.service.url
+                name: api-gateway-config-map
+                key: bank.service.url
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
   triggers:
-    - type: "ConfigChange" 
-    - type: "ImageChange" 
-      imageChangeParams:
+    - type: ConfigChange
+    - imageChangeParams:
         automatic: true
         containerNames:
-          - "api-gateway"
+          - api-gateway
         from:
-          kind: "ImageStreamTag"
-          name: "barathece91/fork-join-api-gateway:latest" 
-  strategy: 
-    type: "Rolling"
+          kind: ImageStreamTag
+          name: 'api-gateway:latest' 
+      type: ImageChange
 ---
 
 
@@ -157,39 +197,48 @@ spec:
 apiVersion: v1
 kind: DeploymentConfig
 metadata:
-  name: fork-join-demo-app
+  name: fork-join-angular
 spec:
   selector:
-    matchLabels:
-      app: fork-join-demo-ui
+    app: fork-join-angular
+    deploymentconfig: fork-join-angular
   replicas: 1
   template:
     metadata:
       labels:
-        app: fork-join-demo-ui
+        app: fork-join-angular
+        deploymentconfig: fork-join-angular
     spec:
       containers:
-      - name: fork-join-demo-ui
-        image: barathece91/fork-join-demo-ui
-        ports:
-        - containerPort: 80
+        - name: fork-join-angular
+          image: barathece91/fork-join-demo-ui
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
   triggers:
-    - type: "ConfigChange" 
-    - type: "ImageChange" 
-      imageChangeParams:
+    - type: ConfigChange
+    - imageChangeParams:
         automatic: true
         containerNames:
-          - "fork-join-demo-ui"
+          - fork-join-angular
         from:
-          kind: "ImageStreamTag"
-          name: "barathece91/fork-join-demo-ui:latest" 
-  strategy: 
-    type: "Rolling"
+          kind: ImageStreamTag
+          name: 'fork-join-angular:latest' 
+      type: ImageChange
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: fork-join-api-gateway
+  name: api-gateway
 spec:
   selector:
     app: api-gateway
@@ -230,11 +279,11 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: fork-join-ui
+  name: fork-join-angular
 spec:
   selector:
-    app: fork-join-demo-ui
-  type: NodePort
+    app: fork-join-angular
+  type: ClusterIP
   ports:
   - protocol: TCP
     port: 4200
