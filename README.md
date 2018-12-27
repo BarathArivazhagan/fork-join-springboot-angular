@@ -49,10 +49,8 @@ git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular5.git
 ```
 cd fork-join-springboot-angular5
 ./build.sh
-
 ```
 * On windows, navigate to each applications and perform maven/webpack build
-
 ```
 cd fork-join-springboot-angular5
 cd api-gateway 
@@ -87,7 +85,6 @@ cd user-service
 cd fork-join-demo
 
 npm run start
-
 ```
 
 ### Docker support
@@ -95,7 +92,6 @@ npm run start
 Take advantage of docker compose to quickly build and run applications as containers.
 
 * Build docker images
-
 ```
 docker-compose build
 ```
