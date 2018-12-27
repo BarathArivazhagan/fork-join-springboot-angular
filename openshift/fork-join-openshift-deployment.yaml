@@ -1,0 +1,290 @@
+
+# config map to pass environment variables to containers
+apiVersion: v1
+data:
+  spring.profiles.active: k8s
+kind: ConfigMap
+metadata:
+  name: spring-config-map
+
+---
+# config map to pass environment variables to containers
+apiVersion: v1
+data:
+  user.service.url: http://${USER_SERVICE_SERVICE_HOST}:${USER_SERVICE_SERVICE_PORT}
+  bank.service.url: http://${BANK_SERVICE_SERVICE_HOST}:${BANK_SERVICE_SERVICE_PORT}
+kind: ConfigMap
+metadata:
+  name: api-gateway-config-map
+---
+
+# deployment config for user service
+apiVersion: v1
+kind: DeploymentConfig
+metadata:  
+  labels:
+    app: user-service
+  name: user-service
+spec:
+  replicas: 1
+  selector:
+    app: user-service
+    deploymentconfig: user-service
+  strategy:    
+    type: Rolling
+  template:
+    metadata:      
+      labels:
+        app: user-service
+        deploymentconfig: user-service
+    spec:
+      containers:
+        - image: barathece91/user-service
+          imagePullPolicy: Always
+          name: user-service
+          ports:
+          - containerPort: 9000
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+              configMapKeyRef:
+                name: spring-config-map
+                key: spring.profiles.active
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - user-service
+        from:
+          kind: ImageStreamTag
+          name: 'user-service:latest' 
+      type: ImageChange
+
+---
+
+# deployment config for bank service
+apiVersion: v1
+kind: DeploymentConfig
+metadata:  
+  labels:
+    app: bank-service
+  name: bank-service  
+spec:
+  replicas: 1
+  selector:
+    app: bank-service
+    deploymentconfig: bank-service
+  strategy:    
+    type: Rolling
+  template:
+    metadata:      
+      labels:
+        app: bank-service
+        deploymentconfig: bank-service
+    spec:
+      containers:
+        - image: barathece91/bank-service
+          imagePullPolicy: Always
+          name: bank-service
+          ports:
+          - containerPort: 9001
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+              configMapKeyRef:
+                name: spring-config-map
+                key: spring.profiles.active
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - bank-service
+        from:
+          kind: ImageStreamTag
+          name: 'bank-service:latest' 
+      type: ImageChange
+
+---
+
+
+# deployment config for api gateway
+
+apiVersion: v1
+kind: DeploymentConfig
+metadata:  
+  labels:
+    app: api-gateway
+  name: api-gateway 
+spec:
+  replicas: 1
+  selector:
+    app: api-gateway
+    deploymentconfig: api-gateway
+  strategy:    
+    type: Rolling
+  template:
+    metadata:      
+      labels:
+        app: api-gateway
+        deploymentconfig: api-gateway
+    spec:
+      containers:
+        - image: barathece91/fork-join-api-gateway
+          imagePullPolicy: Always
+          name: api-gateway
+          ports:
+          - containerPort: 9500
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+              configMapKeyRef:
+                name: spring-config-map
+                key: spring.profiles.active
+          - name: USER_SERVICE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: api-gateway-config-map
+                key: user.service.url
+          - name: BANK_SERVICE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: api-gateway-config-map
+                key: bank.service.url
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - api-gateway
+        from:
+          kind: ImageStreamTag
+          name: 'api-gateway:latest' 
+      type: ImageChange
+---
+
+
+# deployment config for fork-join-demo ui
+
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: fork-join-angular
+spec:
+  selector:
+    app: fork-join-angular
+    deploymentconfig: fork-join-angular
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: fork-join-angular
+        deploymentconfig: fork-join-angular
+    spec:
+      containers:
+        - name: fork-join-angular
+          image: barathece91/fork-join-demo-ui
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - fork-join-angular
+        from:
+          kind: ImageStreamTag
+          name: 'fork-join-angular:latest' 
+      type: ImageChange
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-gateway
+spec:
+  selector:
+    app: api-gateway
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 9500
+    targetPort: 9500
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: bank-service
+spec:
+  selector:
+    app: bank-service
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 9001
+    targetPort: 9001
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: user-service
+spec:
+  selector:
+    app: user-service
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 9000
+    targetPort: 9000
+
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: fork-join-angular
+spec:
+  selector:
+    app: fork-join-angular
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 4200
+    targetPort: 80

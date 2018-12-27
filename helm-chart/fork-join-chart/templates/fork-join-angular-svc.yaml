@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fork-join-demo-ui
+  labels:
+    app: {{ include "fork-join-chart.name" . }}
+    chart-name: {{ include "fork-join-chart.chart" . }}
+    release: {{ .Release.Name }}   
+spec:
+  type: {{ .Values.forkjoinangular.service.type }}
+  ports:
+    - port: {{ .Values.forkjoinangular.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "fork-join-chart.name" . }}
+    chart-name: {{ include "fork-join-chart.chart" . }}
+    release: {{ .Release.Name }}   

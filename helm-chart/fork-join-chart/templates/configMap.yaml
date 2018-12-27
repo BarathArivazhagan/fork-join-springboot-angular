@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  user.service.url: http://${USER_SERVICE_SERVICE_HOST}:${USER_SERVICE_SERVICE_PORT}
+  bank.service.url: http://${BANK_SERVICE_SERVICE_HOST}:${BANK_SERVICE_SERVICE_PORT}
+kind: ConfigMap
+metadata:
+  name: api-gateway-config-map
+
+---
+apiVersion: v1
+data:
+  spring.profiles.active: k8s
+kind: ConfigMap
+metadata:
+  name: spring-config-map

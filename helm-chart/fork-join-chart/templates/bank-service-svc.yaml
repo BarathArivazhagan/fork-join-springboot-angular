@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bank-service
+  labels:
+    app: {{ include "fork-join-chart.name" . }}
+    chart-name: {{ include "fork-join-chart.chart" . }}
+    release: {{ .Release.Name }}   
+spec:
+  type: {{ .Values.bankservice.service.type }}
+  ports:
+    - port: {{ .Values.bankservice.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "fork-join-chart.name" . }}
+    chart-name: {{ include "fork-join-chart.chart" . }}
+    release: {{ .Release.Name }}   
