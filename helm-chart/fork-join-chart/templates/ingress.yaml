@@ -6,10 +6,10 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app.kubernetes.io/name: {{ include "fork-join-chart.name" . }}
-    helm.sh/chart: {{ include "fork-join-chart.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app: {{ include "fork-join-chart.name" . }}
+    chart-name: {{ include "fork-join-chart.chart" . }}
+    release: {{ .Release.Name }}
+    service: {{ .Release.Service }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
