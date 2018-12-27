@@ -4,7 +4,7 @@ metadata:
   name: {{ include "fork-join-chart.fullname" . }}
   labels:
     app: {{ include "fork-join-chart.name" . }}
-    chart-name: {{ include "forkjoinchart.chart" . }}
+    chart-name: {{ include "fork-join-chart.chart" . }}
     release: {{ .Release.Name }}   
 spec:
   type: {{ .Values.forkjoinangular.service.type }}
@@ -15,5 +15,5 @@ spec:
       name: http
   selector:
     app: {{ include "fork-join-chart.name" . }}
-    chart-name: {{ include "forkjoinchart.chart" . }}
+    chart-name: {{ include "fork-join-chart.chart" . }}
     release: {{ .Release.Name }}   

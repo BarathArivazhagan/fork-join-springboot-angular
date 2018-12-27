@@ -6,7 +6,7 @@ metadata:
     app: {{ include "fork-join-chart.name" . }}    
     release: {{ .Release.Name }}
     env: {{ .Values.environment }}
-    chart-name: {{ include "forkjoinchart.chart" . }}
+    chart-name: {{ include "fork-join-chart.chart" . }}
 spec:
   replicas: {{ .Values.bankservice.image.replicas }}
   selector:

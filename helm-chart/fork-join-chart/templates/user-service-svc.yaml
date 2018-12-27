@@ -14,6 +14,6 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: {{ include "forkjoinchart.name" . }}
-    chart-name: {{ include "forkjoinchart.chart" . }}
+    app: {{ include "fork-join-chart.name" . }}
+    chart-name: {{ include "fork-join-chart.chart" . }}
     release: {{ .Release.Name }}   

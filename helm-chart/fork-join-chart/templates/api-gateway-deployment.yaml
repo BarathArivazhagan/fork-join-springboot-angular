@@ -12,7 +12,7 @@ spec:
     matchLabels:
       app: {{ include "fork-join-chart.name" . }}
       release: {{ .Release.Name }}
-      chart-name: {{ include "forkjoinchart.chart" . }}
+      chart-name: {{ include "fork-join-chart.chart" . }}
   template:
     metadata:
       labels:
