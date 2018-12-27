@@ -118,5 +118,35 @@ deployment.apps/fork-join-api-gateway created
 deployment.apps/fork-join-demo-app created
 service/fork-join-api-gateway created
 service/bank-service created
-service/user-service createdservice/fork-join-ui created
+service/user-service created
+service/fork-join-ui created
+```
+
+### Openshift Support
+
+To deploy the applications as docker containers inside kubernetes cluster
+
+```
+$ git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular5.git && cd fork-join-springboot-angular5
+$ oc login  # login into a project
+$ oc create -f openshift/fork-join-openshift-deployment.yaml
+
+configmap/spring-config-map created
+configmap/api-gateway-config-map created
+deploymentconfig "user-service" created
+deploymentconfig "bank-service" created
+deploymentconfig "api-gateway" created
+deploymentconfig "fork-join-angular" created
+service "api-gateway" created
+service "bank-service" created
+service "user-service" created
+service "fork-join-angular" created
+```
+
+## Teardown openshift resources
+
+To delete all the resources created in openshift
+
+```
+$ oc delete dc --all && oc delete svc --all && oc delete configmaps --all
 ```
