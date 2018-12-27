@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "fork-join-chart.fullname" . }}
+  labels:
+    app: {{ include "fork-join-chart.name" . }}    
+    release: {{ .Release.Name }}
+    env: {{ .Values.environment }}
+spec:
+  replicas: {{ .Values.fork-join-angular.image.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "fork-join-chart.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "fork-join-chart.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Values.fork-join-angular.image.name }}
+          image: "{{ .Values.fork-join-angular.image.repository }}:{{ .Values.fork-join-angular.image.tag }}"
+          imagePullPolicy: {{ .Values.fork-join-angular.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 4200
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
