@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "fork-join-chart.fullname" . }}
+  name: user-service
   labels:
     app: {{ include "fork-join-chart.name" . }}    
     release: {{ .Release.Name }}

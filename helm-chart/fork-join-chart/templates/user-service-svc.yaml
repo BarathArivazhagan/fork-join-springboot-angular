@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "fork-join-chart.fullname" . }}
+  name: user-service
   labels:
     app: {{ include "fork-join-chart.name" . }}
     chart-name: {{ include "fork-join-chart.chart" . }}
