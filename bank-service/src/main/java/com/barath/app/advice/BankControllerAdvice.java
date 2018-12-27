@@ -15,7 +15,7 @@ public class BankControllerAdvice {
     private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity handleException(Exception ex){
+    public ResponseEntity<String> handleException(Exception ex){
 
         logger.error("Exception ex {} ",ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());

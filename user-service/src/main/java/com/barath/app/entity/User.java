@@ -2,20 +2,32 @@ package com.barath.app.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import java.io.Serializable;
 
+
+/**
+ * 
+ * @author barath
+ *
+ */
 @Entity
 @Table(name="USER")
 public class User implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 5954679009373777305L;
+
+	@Id
     @Column(name="USER_ID")
     private Long userId;
 
     @Column(name="USER_NAME")
+    @NotNull(message="user name cannot be null")
     private String userName;
 
     @Column(name="USER_AGE")
+    @NotNull(message="user age cannot be null")
     private int userAge;
 
     @Column(name="USER_GENDER")

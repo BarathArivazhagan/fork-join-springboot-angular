@@ -1,8 +1,16 @@
 package com.barath.app.exception;
 
+
+/**
+ * 
+ * @author barath
+ *
+ */
 public class BankNotFoundException extends RuntimeException {
 
-    public BankNotFoundException() {
+	private static final long serialVersionUID = 483353580195413715L;
+
+	public BankNotFoundException() {
         super();
     }
 

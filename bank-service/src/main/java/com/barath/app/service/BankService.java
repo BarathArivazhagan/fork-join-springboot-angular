@@ -1,20 +1,28 @@
 package com.barath.app.service;
 
 
-import com.barath.app.entity.Bank;
-import com.barath.app.exception.BankNotFoundException;
-import com.barath.app.repository.BankRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import javax.annotation.PostConstruct;
 import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Objects;
 
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import com.barath.app.entity.Bank;
+import com.barath.app.exception.BankNotFoundException;
+import com.barath.app.repository.BankRepository;
+
+
+/**
+ * 
+ * @author barath
+ *
+ */
 @Service
 public class BankService {
 
@@ -32,18 +40,17 @@ public class BankService {
 
     public Bank getBank(Long bankId){
 
-        Optional<Bank> bankOptional= this.bankRepository.findById(bankId);
-        if(bankOptional.isPresent()){
-            return bankOptional.get();
-        }
-        throw new BankNotFoundException("Bank with bank id "+bankId+" not found");
+      Optional<Bank> bankOptional= this.bankRepository.findById(bankId);
+      bankOptional.orElseThrow(() -> new BankNotFoundException("Bank with bank id "+bankId+" not found"));
+      return bankOptional.get();
+     
     }
 
     public List<Bank> getBanks(){
 
         List<Bank> banks = this.bankRepository.findAll();
         if(logger.isInfoEnabled()){
-            banks.forEach(bank -> logger.info(bank.toString()));
+            banks.forEach(bank -> logger.info(Objects.toString(bank)));
         }
         return banks;
     }

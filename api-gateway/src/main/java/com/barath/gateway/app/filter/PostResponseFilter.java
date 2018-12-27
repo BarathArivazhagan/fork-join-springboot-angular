@@ -42,8 +42,7 @@ public class PostResponseFilter extends ZuulFilter {
                 RequestContext context = RequestContext.getCurrentContext();
                 InputStream stream = context.getResponseDataStream();
                 String body = StreamUtils.copyToString(stream, Charset.forName("UTF-8"));
-
-                    logger.debug("response body {}",body);
+                logger.debug("response body {}",body);
                 context.setResponseBody(body);
             }
 
