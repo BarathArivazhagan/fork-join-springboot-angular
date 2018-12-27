@@ -4,16 +4,16 @@ metadata:
   name: {{ include "fork-join-chart.fullname" . }}
   labels:
     app: {{ include "fork-join-chart.name" . }}
-    helm.sh/chart: {{ include "fork-join-chart.chart" . }}
+    chart-name: {{ include "forkjoinchart.chart" . }}
     release: {{ .Release.Name }}   
 spec:
-  type: {{ .Values.fork-join-angular.service.type }}
+  type: {{ .Values.forkjoinangular.service.type }}
   ports:
-    - port: {{ .Values.fork-join-angular.service.port }}
+    - port: {{ .Values.forkjoinangular.service.port }}
       targetPort: http
       protocol: TCP
       name: http
   selector:
     app: {{ include "fork-join-chart.name" . }}
-    helm.sh/chart: {{ include "fork-join-chart.chart" . }}
+    chart-name: {{ include "forkjoinchart.chart" . }}
     release: {{ .Release.Name }}   

@@ -7,9 +7,9 @@ metadata:
     chart-name: {{ include "fork-join-chart.chart" . }}
     release: {{ .Release.Name }}   
 spec:
-  type: {{ .Values.api-gateway.service.type }}
+  type: {{ .Values.apigateway.service.type }}
   ports:
-    - port: {{ .Values.api-gateway.service.port }}
+    - port: {{ .Values.apigateway.service.port }}
       targetPort: http
       protocol: TCP
       name: http

@@ -6,6 +6,7 @@ metadata:
     app: {{ include "fork-join-chart.name" . }}    
     release: {{ .Release.Name }}
     env: {{ .Values.environment }}
+    chart-name: {{ include "forkjoinchart.chart" . }}
 spec:
   replicas: {{ .Values.user-service.image.replicas }}
   selector:
@@ -19,9 +20,9 @@ spec:
         release: {{ .Release.Name }}
     spec:
       containers:
-        - name: {{ .Values.user-service.image.name }}
-          image: "{{ .Values.user-service.image.repository }}:{{ .Values.user-service.image.tag }}"
-          imagePullPolicy: {{ .Values.user-service.image.pullPolicy }}
+        - name: {{ .Values.userservice.image.name }}
+          image: "{{ .Values.userservice.image.repository }}:{{ .Values.userservice.image.tag }}"
+          imagePullPolicy: {{ .Values.userservice.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 9000

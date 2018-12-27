@@ -7,9 +7,9 @@ metadata:
     chart-name: {{ include "fork-join-chart.chart" . }}
     release: {{ .Release.Name }}   
 spec:
-  type: {{ .Values.bank-service.service.type }}
+  type: {{ .Values.bankservice.service.type }}
   ports:
-    - port: {{ .Values.bank-service.service.port }}
+    - port: {{ .Values.bankservice.service.port }}
       targetPort: http
       protocol: TCP
       name: http

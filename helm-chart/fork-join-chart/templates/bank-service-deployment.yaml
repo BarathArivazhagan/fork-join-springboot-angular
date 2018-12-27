@@ -6,8 +6,9 @@ metadata:
     app: {{ include "fork-join-chart.name" . }}    
     release: {{ .Release.Name }}
     env: {{ .Values.environment }}
+    chart-name: {{ include "forkjoinchart.chart" . }}
 spec:
-  replicas: {{ .Values.bank-service.image.replicas }}
+  replicas: {{ .Values.bankservice.image.replicas }}
   selector:
     matchLabels:
       app: {{ include "fork-join-chart.name" . }}
@@ -19,9 +20,9 @@ spec:
         release: {{ .Release.Name }}
     spec:
       containers:
-        - name: {{ .Values.bank-service.image.name }}
-          image: "{{ .Values.bank-service.image.repository }}:{{ .Values.bank-service.image.tag }}"
-          imagePullPolicy: {{ .Values.bank-service.image.pullPolicy }}
+        - name: {{ .Values.bankservice.image.name }}
+          image: "{{ .Values.bankservice.image.repository }}:{{ .Values.bankservice.image.tag }}"
+          imagePullPolicy: {{ .Values.bankservice.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 9001
