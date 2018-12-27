@@ -27,14 +27,22 @@ spec:
             - name: http
               containerPort: 9500
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+                configMapKeyRef:
+                    name: spring-config-map
+                    key: spring.profiles.active
+          - name: user.service.url
+            valueFrom:
+                configMapKeyRef:
+                    name: api-gateway-config-map
+                    key: user.service.url
+          - name: bank.service.url
+            valueFrom:
+                configMapKeyRef:
+                    name: api-gateway-config-map
+                    key: bank.service.url
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

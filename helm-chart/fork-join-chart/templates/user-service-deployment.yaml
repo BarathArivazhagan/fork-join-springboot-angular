@@ -27,14 +27,12 @@ spec:
             - name: http
               containerPort: 9000
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+                configMapKeyRef:
+                    name: spring-config-map
+                    key: spring.profiles.active   
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

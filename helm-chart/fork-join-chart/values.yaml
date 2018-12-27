@@ -9,7 +9,7 @@ bankservice:
     repository: barathece91/bank-service
     tag: latest
     pullPolicy: Always
-  replicas: 3
+  replicas: 1
   service:
     type: ClusterIP
     port: 9001
@@ -20,7 +20,7 @@ userservice:
     repository: barathece91/user-service
     tag: latest
     pullPolicy: Always
-  replicas: 3
+  replicas: 1
   service:
     type: ClusterIP
     port: 9000
@@ -31,7 +31,7 @@ apigateway:
     repository: barathece91/fork-join-api-gateway
     tag: latest
     pullPolicy: Always
-  replicas: 3
+  replicas: 1
   service:
     type: ClusterIP
     port: 9500
@@ -42,7 +42,7 @@ forkjoinangular:
     repository: barathece91/fork-join-demo-ui
     tag: latest
     pullPolicy: Always
-  replicas: 3
+  replicas: 1
   service:
     type: ClusterIP
     port: 4200
