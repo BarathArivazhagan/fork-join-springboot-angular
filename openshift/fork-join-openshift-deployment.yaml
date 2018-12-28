@@ -387,3 +387,75 @@ spec:
   - protocol: TCP
     port: 4200
     targetPort: 8080
+
+---
+
+# route for api-gateway
+
+apiVersion: v1
+kind: Route
+metadata:
+  name: api-gateway
+spec:
+  host:
+  to:
+    kind: Service
+    name: api-gateway
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress: []
+
+---
+# route for bank-service
+
+apiVersion: v1
+kind: Route
+metadata:
+  name: bank-service
+spec:
+  host:
+  to:
+    kind: Service
+    name: bank-service
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress: []
+
+---
+# route for user-service
+
+apiVersion: v1
+kind: Route
+metadata:
+  name: user-service
+spec:
+  host:
+  to:
+    kind: Service
+    name: user-service
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress: []
+
+
+---
+# route for fork-join-demo-ui
+
+apiVersion: v1
+kind: Route
+metadata:
+  name: fork-join-angular
+spec:
+  host:
+  to:
+    kind: Service
+    name: fork-join-angular
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress: []
+
+  
