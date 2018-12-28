@@ -39,7 +39,7 @@ spec:
         deploymentconfig: user-service
     spec:
       containers:
-        - image: barathece91/user-service
+        - image: barathece91/user-service:latest
           imagePullPolicy: Always
           name: user-service
           ports:
@@ -93,7 +93,7 @@ spec:
         deploymentconfig: bank-service
     spec:
       containers:
-        - image: barathece91/bank-service
+        - image: barathece91/bank-service:latest
           imagePullPolicy: Always
           name: bank-service
           ports:
@@ -149,7 +149,7 @@ spec:
         deploymentconfig: api-gateway
     spec:
       containers:
-        - image: barathece91/fork-join-api-gateway
+        - image: barathece91/fork-join-api-gateway:latest
           imagePullPolicy: Always
           name: api-gateway
           ports:
@@ -211,9 +211,9 @@ spec:
     spec:
       containers:
         - name: fork-join-angular
-          image: barathece91/fork-join-demo-ui
+          image: barathece91/forj-join-demo-ui-openshift
           ports:
-            - containerPort: 80
+            - containerPort: 8080
               protocol: TCP
           resources: {}
           terminationMessagePath: /dev/termination-log
@@ -235,6 +235,97 @@ spec:
           name: 'fork-join-angular:latest' 
       type: ImageChange
 ---
+
+# image stream for bank service 
+
+apiVersion: v1
+kind: ImageStream
+metadata:
+  labels:
+    app: bank-service
+  name: bank-service
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - from:
+        kind: DockerImage
+        name: barathece91/bank-service
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: Source
+
+---
+
+# image stream for user service 
+
+apiVersion: v1
+kind: ImageStream
+metadata:
+  labels:
+    app: user-service
+  name: user-service
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - from:
+        kind: DockerImage
+        name: barathece91/user-service
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: Source
+
+---
+
+# image stream for api gateway 
+
+apiVersion: v1
+kind: ImageStream
+metadata:
+  labels:
+    app: api-gateway
+  name: api-gateway
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - from:
+        kind: DockerImage
+        name: barathece91/fork-join-api-gateway
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: Source
+
+---
+
+# image stream for fork join demo ui 
+
+apiVersion: v1
+kind: ImageStream
+metadata:
+  labels:
+    app: fork-join-angular
+  name: fork-join-angular
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - from:
+        kind: DockerImage
+        name: barathece91/forj-join-demo-ui-openshift
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: Source
+
+---
+
+# kubernetes service for api gateway
+
 kind: Service
 apiVersion: v1
 metadata:
@@ -248,6 +339,9 @@ spec:
     port: 9500
     targetPort: 9500
 ---
+
+# kubernetes service for bank-service
+
 kind: Service
 apiVersion: v1
 metadata:
@@ -261,6 +355,8 @@ spec:
     port: 9001
     targetPort: 9001
 ---
+# kubernetes service for user-service
+
 kind: Service
 apiVersion: v1
 metadata:
@@ -276,6 +372,9 @@ spec:
 
 
 ---
+
+# kubernetes service for angular app
+
 kind: Service
 apiVersion: v1
 metadata:
@@ -287,4 +386,4 @@ spec:
   ports:
   - protocol: TCP
     port: 4200
-    targetPort: 80
+    targetPort: 8080

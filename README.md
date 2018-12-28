@@ -66,7 +66,6 @@ cd fork-join-demo
 
 npm install
 npm run build
-
 ```
 
 * Start the applications
@@ -124,24 +123,33 @@ service/fork-join-ui created
 
 ### Openshift Support
 
-To deploy the applications as docker containers inside kubernetes cluster
+To deploy the applications as docker containers in openshift cluster
+
+[Katacoda Openshift Playground](https://www.katacoda.com/courses/openshift/playground)
 
 ```
 $ git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular5.git && cd fork-join-springboot-angular5
 $ oc login  # login into a project
 $ oc create -f openshift/fork-join-openshift-deployment.yaml
 
-configmap/spring-config-map created
-configmap/api-gateway-config-map created
+configmap "spring-config-map" created
+configmap "api-gateway-config-map" created
 deploymentconfig "user-service" created
 deploymentconfig "bank-service" created
-deploymentconfig "api-gateway" created
+eploymentconfig "api-gateway" created
 deploymentconfig "fork-join-angular" created
+imagestream "bank-service" created
+imagestream "user-service" created
+imagestream "api-gateway" created
+imagestream "fork-join-angular" created
 service "api-gateway" created
 service "bank-service" created
 service "user-service" created
 service "fork-join-angular" created
 ```
+> Note: Angular app uses nginx to serve static files.
+        To run nginx as non root user in openshift, use fork-join-demo/Dockerfile.openshift to build angular app.
+
 
 ## Teardown openshift resources
 

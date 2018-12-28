@@ -135,7 +135,7 @@ spec:
       - name: fork-join-demo-ui
         image: barathece91/fork-join-demo-ui
         ports:
-        - containerPort: 4200
+        - containerPort: 8080
 ---
 kind: Service
 apiVersion: v1
@@ -190,4 +190,4 @@ spec:
   ports:
   - protocol: TCP
     port: 4200
-    targetPort: 80
+    targetPort: 8080
