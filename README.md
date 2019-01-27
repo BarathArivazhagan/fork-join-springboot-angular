@@ -1,4 +1,4 @@
-# fork-join-springboot-angular5
+# fork-join-springboot-angular
 
 In parallel computing, fork–join is a way of setting up and executing parallel programs, such that execution branches off in parallel at designated points in the program, to "join" (merge) at a subsequent point and resume sequential execution. Parallel sections may fork recursively until a certain task granularity is reached. Fork–join can be considered a parallel design pattern.
 
@@ -33,6 +33,38 @@ In parallel computing, fork–join is a way of setting up and executing parallel
     <td>9500</td>
     <td>Zuul API Gateway</td>
   </tr>
+  
+</table>
+
+## Compatability Matrix
+
+clone the repository based on below maintained versions.
+
+<table>
+ <tr>
+    <th style="text-align:left">Branch/Version</th>
+    <th style="text-align:left">Angular</th> 
+    <th style="text-align:left">Spring Boot</th>
+    <th style="text-align:left">Spring Cloud</th>
+  </tr>
+  <tr>
+    <td>master</td>
+    <td>7.0.0</td>
+    <td>2.1.2.RELEASE</td>
+    <td>Greenwich.RELEASE</td>
+  </tr>
+  <tr>
+    <td>v1.0</td>
+    <td>5.0.2</td>
+     <td>2.0.3.RELEASE</td>
+    <td>Finchley.RELEASE</td>
+  </tr>
+  <tr>
+    <td>v2.0</td>
+    <td>6.0.0</td>
+    <td>2.1.0.RELEASE</td>
+    <td>Greenwich.RELEASE</td>
+  </tr> 
   
 </table>
 
