@@ -9,13 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.netflix.zuul.filters.post.SendErrorFilter;
-import org.springframework.cloud.netflix.zuul.util.ZuulRuntimeException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 import com.netflix.zuul.context.RequestContext;
-import com.netflix.zuul.exception.ZuulException;
 
 @Component
 public class CustomErrorFilter extends SendErrorFilter {
@@ -57,29 +55,6 @@ public class CustomErrorFilter extends SendErrorFilter {
             ReflectionUtils.rethrowRuntimeException(ex);
         }
         return null;
-    }
-
-
-    protected ExceptionHolder findZuulException(Throwable throwable) {
-        if (throwable.getCause() instanceof ZuulRuntimeException) {
-            // this was a failure initiated by one of the local filters
-            if(throwable.getCause().getCause() instanceof ZuulException) {
-                return new ZuulExceptionHolder((ZuulException) throwable.getCause().getCause());
-            }
-        }
-
-        if (throwable.getCause() instanceof ZuulException) {
-            // wrapped zuul exception
-            return  new ZuulExceptionHolder((ZuulException) throwable.getCause());
-        }
-
-        if (throwable instanceof ZuulException) {
-            // exception thrown by zuul lifecycle
-            return new ZuulExceptionHolder((ZuulException) throwable);
-        }
-
-        // fallback
-        return new DefaultExceptionHolder(throwable);
     }
 
 

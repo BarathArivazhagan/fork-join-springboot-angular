@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SimpleErrorController implements ErrorController {
 
     public ResponseEntity<Object> handleError(HttpServletRequest request) {
-        System.out.println("called");
+        
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         Exception exception = (Exception) request.getAttribute("javax.servlet.error.exception");
         return ResponseEntity.status(statusCode).body(exception.getMessage());

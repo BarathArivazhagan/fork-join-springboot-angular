@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BankServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BankServiceApplication.class, args);
+		SpringApplication.run(BankServiceApplication.class, args);	  
 	}
 	
 	
