@@ -3,7 +3,7 @@ import { Bank, BankComponent } from './components/bank/bank.component';
 import { User, UserComponent } from './components/user/user.component';
 import { BankService } from './services/bank.service';
 import { UserService } from './services/user.service';
-import { forkJoin } from "rxjs/observable/forkJoin";
+import { forkJoin } from "rxjs";
 
 @Component({
   selector: 'app-root',
