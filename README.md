@@ -14,22 +14,22 @@ In parallel computing, fork–join is a way of setting up and executing parallel
     <th style="text-align:left">Description</th>
   </tr>
   <tr>
-    <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular5/tree/master/bank-service"> bank-service</a></td>
+    <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular/tree/master/bank-service"> bank-service</a></td>
     <td>9001</td>
     <td>Spring Boot Microservice</td>
   </tr>
   <tr>
-    <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular5/tree/master/user-service">user-service</a></td>
+    <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular/tree/master/user-service">user-service</a></td>
     <td>9000</td>
     <td>Spring Boot Microservice</td>
   </tr>
   <tr>
-    <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular5/tree/master/fork-join-demo">fork-join-demo</a></td>
+    <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular/tree/master/fork-join-demo">fork-join-demo</a></td>
     <td>4200</td>
     <td>Angular App</td>
   </tr>
   <tr>
-    <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular5/tree/master/api-gateway">api-gateway</a></td>
+    <td><a href="https://github.com/BarathArivazhagan/fork-join-springboot-angular/tree/master/api-gateway">api-gateway</a></td>
     <td>9500</td>
     <td>Zuul API Gateway</td>
   </tr>
@@ -138,7 +138,7 @@ docker-compose up
 To deploy the applications as docker containers inside kubernetes cluster
 
 ```
-$ git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular5.git && cd fork-join-springboot-angular5
+$ git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular.git && cd fork-join-springboot-angular5
 $ kubectl create -f k8s/fork-join-deployment-k8s.yaml
 
 configmap/spring-config-map created
