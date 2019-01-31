@@ -73,18 +73,18 @@ clone the repository based on below maintained versions.
 * Clone the repository
 
 ```
-git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular5.git
+git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular.git
 ```
 
 * Execute below script to build all the applications
 
 ```
-cd fork-join-springboot-angular5
+cd fork-join-springboot-angular
 ./build.sh
 ```
 * On windows, navigate to each applications and perform maven/webpack build
 ```
-cd fork-join-springboot-angular5
+cd fork-join-springboot-angular
 cd api-gateway 
 ./mvnw clean package
 
@@ -103,7 +103,7 @@ npm run build
 * Start the applications
 
 ```
-cd fork-join-springboot-angular5
+cd fork-join-springboot-angular
 cd api-gateway 
 ./mvnw spring-boot:run
 
@@ -138,7 +138,7 @@ docker-compose up
 To deploy the applications as docker containers inside kubernetes cluster
 
 ```
-$ git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular.git && cd fork-join-springboot-angular5
+$ git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular.git && cd fork-join-springboot-angular
 $ kubectl create -f k8s/fork-join-deployment-k8s.yaml
 
 configmap/spring-config-map created
@@ -160,7 +160,7 @@ To deploy the applications as docker containers in openshift cluster
 [Katacoda Openshift Playground](https://www.katacoda.com/courses/openshift/playground)
 
 ```
-$ git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular5.git && cd fork-join-springboot-angular5
+$ git clone https://github.com/BarathArivazhagan/fork-join-springboot-angular.git && cd fork-join-springboot-angular
 $ oc login  # login into a project
 $ oc create -f openshift/fork-join-openshift-deployment.yaml
 
